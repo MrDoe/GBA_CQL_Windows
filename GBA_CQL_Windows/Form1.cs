@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GBA_CQL_Windows
 {
@@ -165,12 +159,12 @@ namespace GBA_CQL_Windows
         }
         private string CreateMeasure(string uuid_lib)
         {
-            string sType = (string)ddlResourceType.SelectedValue;
+            string sType = ddlResourceType.Text;
 
             // create json measure object
             JSON_Measure oJson = new JSON_Measure(sType)
             {
-                url = "urn:uuid:" + System.Guid.NewGuid().ToString(),
+                url = "urn:uuid:" + Guid.NewGuid().ToString(),
                 library = new List<string> { "urn:uuid:" + uuid_lib }
             };
 
@@ -182,7 +176,7 @@ namespace GBA_CQL_Windows
 
             // convert to base64
             var bInput = System.Text.Encoding.UTF8.GetBytes(input);
-            string b64Input = System.Convert.ToBase64String(bInput);
+            string b64Input = Convert.ToBase64String(bInput);
 
             // create library
             List<string> aReturn = CreateLibrary(b64Input);
