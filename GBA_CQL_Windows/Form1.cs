@@ -206,9 +206,16 @@ namespace GBA_CQL_Windows
             // send get request to evaluate measure
             sResponse = SendRequest(null, "Measure/" + requests.sMeaID + "/$evaluate-measure?periodStart=2000&periodEnd=2099");
 
-            // beautify and print JSON output
-            txtOutput.Text = JValue.Parse(sResponse).ToString(Formatting.Indented);
+            try // beautify and print JSON output
+            {
+                txtOutput.Text = JValue.Parse(sResponse).ToString(Formatting.Indented);
+            }
+            catch // no JSON output, just print response
+            {
+                txtOutput.Text = sResponse;
+            }
         }
+
         private string SendRequest(string sJSON, string sType)
         {
             var client = new RestClient(ddlServer.Text + "/" + sType);
